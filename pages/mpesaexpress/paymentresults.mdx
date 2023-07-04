@@ -1,0 +1,49 @@
+## Receiving Payment Confirmation on Server
+
+After initiating the payment using MpesaPay's `stkPush` method, M-Pesa will send the payment confirmation to the `callbackUrl` you specified during the payment initiation. The confirmation is sent in the form of a POST request to your server's endpoint. To handle this incoming payment confirmation on your server, you can set up a route or API endpoint to receive the data.
+
+Below is an example of how you can handle the incoming payment confirmation using Node.js and Express:
+
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+// Add middleware to parse incoming JSON data
+app.use(bodyParser.json());
+
+// Endpoint to receive payment confirmation
+app.post('/callback', (req, res) => {
+  const data = req.body;
+  console.log('Payment confirmation received:', data);
+
+  // Save payment data to your database
+  // For example, you can use a database library like Mongoose or Sequelize
+  // Here's a simplified example using a hypothetical database function:
+  savePaymentToDatabase(data)
+    .then(() => {
+      console.log('Payment data saved to the database.');
+      // Send a response back to M-Pesa to acknowledge receipt
+      res.json({ result_code: 0, result_desc: 'Success' });
+    })
+    .catch((error) => {
+      console.error('Error saving payment data:', error);
+      // Send a response back to M-Pesa to indicate an error
+      res.status(500).json({ result_code: 1, result_desc: 'Error' });
+    });
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+```
+
+In this example, we use the `express` library to create a simple server with an endpoint `/callback` that will receive the payment confirmation data. We use the `body-parser` middleware to parse the incoming JSON data in the request body.
+
+When M-Pesa sends the payment confirmation to your `callbackUrl`, your server receives it as a POST request with the payment details in the `req.body`. The server then processes the data, saves it to the database using the `savePaymentToDatabase` function (you would need to implement this function or use a database library), and responds with a JSON object indicating the status of the processing.
+
+Please note that this is a simplified example, and in a real-world scenario, you would need to add error handling, data validation, and proper database integration. Additionally, you may want to secure your server's endpoint using authentication and validation mechanisms to ensure that only legitimate payment confirmations are processed.
+
+By handling the payment confirmation on your server and saving it to a database, you can keep track of the payment status, reconcile transactions, and perform any necessary post-payment processing as required by your application's business logic.

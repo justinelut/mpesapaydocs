@@ -1,0 +1,70 @@
+
+
+## Mpesa Express
+
+M-Pesa Express allows customers to make payments directly from a website using their M-Pesa accounts. When making a payment on a merchant's website, customers select the M-Pesa Express option and enter their mobile phone number associated with their M-Pesa account. After initiating the payment, a payment request is sent to their mobile device. The customer receives a notification containing the payment details, such as the merchant's Paybill or Till number and the payment amount. They then authorize the transaction by entering their secure M-Pesa PIN on their mobile device. Once the payment is confirmed, the customer receives a message indicating the successful transaction. On the merchant's website, a confirmation is displayed, and the merchant is notified of the payment, allowing the customer to proceed with their transaction.
+
+M-Pesa Express simplifies the payment process by eliminating the need for physical cash or cards. It provides a seamless and secure way for customers to make payments online, leveraging their M-Pesa mobile money accounts. With this feature, customers can conveniently and instantly pay for goods and services from a website, promoting financial inclusion and reducing reliance on traditional payment methods. The process involves entering the phone number, initiating the payment, authorizing the transaction through the mobile device by entering the PIN, and receiving confirmation of the successful payment, enabling customers to complete their transactions smoothly and securely.
+
+## Getting Started
+
+Import default `MpesaPay` from the `mpesapay` module in your Node.js, Nextjs, SveltKit, Nuxtjs application:
+
+```javascript
+import MpesaPay from 'mpesapay';
+```
+
+Create an instance of the `MpesaPay` class with your Mpesa API credentials:
+
+```javascript
+const consumerKey = 'YOUR_CONSUMER_KEY';
+const consumerSecret = 'YOUR_CONSUMER_SECRET';
+const businessShortCode = 'YOUR_BUSINESS_SHORT_CODE';
+const passkey = 'YOUR_PASS_KEY';
+const accountReference = 'YOUR_ACCOUNT_REFERENCE';
+const transactionDesc = 'YOUR_TRANSACTION_DESCRIPTION';
+
+const mpesaPay = new MpesaPay(
+  consumerKey,
+  consumerSecret,
+  businessShortCode,
+  passkey,
+  accountReference,
+  transactionDesc
+);
+```
+
+Replace the placeholders with your actual Mpesa credentials.
+
+**Initiating a Payment**
+
+To initiate a payment using Mpesa Pay, you can call the `stkPush` method:
+
+```javascript
+async function initiatePayment(amount, phoneNumber, callbackUrl) {
+  try {
+    const response = await mpesaPay.stkPush(amount, phoneNumber, callbackUrl);
+    console.log(response);
+    // Handle the response data
+  } catch (error) {
+    console.error(error);
+    // Handle errors
+  }
+}
+
+// Call the function to initiate a payment
+const amount = '100';
+const phoneNumber = '254712345678';
+const callbackUrl = 'https://example.com/callback';
+initiatePayment(amount, phoneNumber, callbackUrl);
+```
+
+Here is an explanation of the parameters:
+
+- `amount`: The amount of money to be paid. This should be a string value representing the amount in Kenyan shillings.
+- `phoneNumber`: The phone number of the person making the payment. This should be a string value starting with the country code (e.g., "254" for Kenya), followed by the phone number without any spaces or special characters.
+- `callbackUrl`: The URL that M-Pesa will use to send payment confirmation notifications to your server. This should be a string value containing a valid URL.
+
+The `stkPush` method initiates the payment process and returns a Promise. The Promise resolves with the response data if the payment was successfully initiated, or rejects with an error if the payment initiation fails.
+
+Make sure to handle the response data and errors accordingly in your application.

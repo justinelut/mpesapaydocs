@@ -1,0 +1,98 @@
+import React from 'react';
+
+export function ComingSoon() {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        WebkitTransform: 'translate(-50%, -50%)',
+        animation: 'fadeIn 1000ms ease',
+        WebkitAnimation: 'fadeIn 1000ms ease',
+      }}
+    >
+      <h1
+        style={{
+          fontSize: '50px',
+          fontFamily: 'Poppins, sans-serif',
+          marginBottom: '0',
+          lineHeight: '1',
+          fontWeight: '700',
+        }}
+      >
+        coming soon<span style={{ color: '#4FEBFE' }}>.</span>
+      </h1>
+      <p
+        style={{
+          textAlign: 'center',
+          margin: '18px',
+          fontFamily: 'Muli, sans-serif',
+          fontWeight: 'normal',
+        }}
+      >
+        Put some text here.
+      </p>
+      <div style={{ textAlign: 'center' }}>
+        <a
+          href=""
+          style={{
+            color: '#00091B',
+            background: '#fff',
+            height: '15px',
+            width: '15px',
+            padding: '13px',
+            margin: '0 10px',
+            borderRadius: '50px',
+            border: '2px solid #fff',
+            transition: 'all 200ms ease',
+            textDecoration: 'none',
+            position: 'relative',
+          }}
+        >
+          <i className="fa fa-twitter"></i>
+        </a>
+        <a
+          href=""
+          style={{
+            color: '#00091B',
+            background: '#fff',
+            height: '15px',
+            width: '15px',
+            padding: '13px',
+            margin: '0 10px',
+            borderRadius: '50px',
+            border: '2px solid #fff',
+            transition: 'all 200ms ease',
+            textDecoration: 'none',
+            position: 'relative',
+          }}
+        >
+          <i className="fa fa-youtube-play"></i>
+        </a>
+        <a
+          href=""
+          style={{
+            color: '#00091B',
+            background: '#fff',
+            height: '15px',
+            width: '15px',
+            padding: '13px',
+            margin: '0 10px',
+            borderRadius: '50px',
+            border: '2px solid #fff',
+            transition: 'all 200ms ease',
+            textDecoration: 'none',
+            position: 'relative',
+          }}
+        >
+          <i className="fa fa-paper-plane"></i>
+        </a>
+      </div>
+    </div>
+  );
+}
+
+
+<ComingSoon />

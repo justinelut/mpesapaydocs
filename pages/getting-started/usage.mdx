@@ -1,0 +1,31 @@
+
+## Usage
+
+Import default `MpesaPay` from the `mpesapay` module in your Node.js, Nextjs, SveltKit, Nuxtjs application:
+
+```javascript
+import MpesaPay from 'mpesapay';
+```
+
+Create an instance of the `MpesaPay` class with your Mpesa API credentials:
+
+```javascript
+const consumerKey = 'YOUR_CONSUMER_KEY';
+const consumerSecret = 'YOUR_CONSUMER_SECRET';
+const businessShortCode = 'YOUR_BUSINESS_SHORT_CODE';
+const passkey = 'YOUR_PASS_KEY';
+const accountReference = 'YOUR_ACCOUNT_REFERENCE';
+const transactionDesc = 'YOUR_TRANSACTION_DESCRIPTION';
+
+const mpesaPay = new MpesaPay(
+  consumerKey,
+  consumerSecret,
+  businessShortCode,
+  passkey,
+  accountReference,
+  transactionDesc
+);
+```
+
+Replace the placeholders with your actual Mpesa credentials.
+
