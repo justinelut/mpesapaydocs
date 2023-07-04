@@ -1,8 +1,8 @@
 {
 "scripts": {
-    "dev": "next dev --port 4001",
+    "dev": "next dev --port 4004",
     "build": "next build",
-    "start": "next start --port 4001"
+    "start": "next start --port 4004"
   },
   "dependencies": {
     "next": "^13.4.8",
