@@ -40,7 +40,7 @@ export default {
     text: 'Edit this page',
     component: () => {
       return (
-        <Link href='https://github.com/justinelut/mpesapaydocs/blob/master/README.md'>
+        <Link href='https://github.com/justinelut/mpesapaydocs/'>
           Edit this page
         </Link>
       );
