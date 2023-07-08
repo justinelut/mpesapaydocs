@@ -2,48 +2,125 @@
 
 After initiating the payment using MpesaPay's `stkPush` method, M-Pesa will send the payment confirmation to the `callbackUrl` you specified during the payment initiation. The confirmation is sent in the form of a POST request to your server's endpoint. To handle this incoming payment confirmation on your server, you can set up a route or API endpoint to receive the data.
 
-Below is an example of how you can handle the incoming payment confirmation using Node.js and Express:
+### Payment Statuses
+
+The `FormatPaymentData` helper method from the `mpesapay` module formats the Mpesa payment details and provides the following payment statuses:
+
+- **Success**: The payment was successfully processed and completed.
+- **Canceled**: The payment was canceled by the user or terminated for some reason.
+- **Failed**: The payment failed due to an error or insufficient funds.
+
+### Backend Setup
+
+To create the Node.js backend and handle the payment confirmation, follow these steps:
+
+1. Install the required dependencies by running the following command:
+
+```bash
+npm install express mpesapay
+```
+
+2. Create a new JavaScript file, such as `server.js`, as the entry point for your backend code.
+
+3. Import the necessary dependencies and initialize the Express app:
 
 ```javascript
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
+import { FormatPaymentData } from 'mpesapay';
+
 const app = express();
 const port = 3000;
 
-// Add middleware to parse incoming JSON data
 app.use(bodyParser.json());
+```
 
-// Endpoint to receive payment confirmation
+### Handle Payment Confirmation Endpoint
+
+To handle the payment confirmation endpoint, add the following code:
+
+```javascript
 app.post('/callback', (req, res) => {
-  const data = req.body;
-  console.log('Payment confirmation received:', data);
+  const paymentData = req.body;
 
-  // Save payment data to your database
-  // For example, you can use a database library like Mongoose or Sequelize
-  // Here's a simplified example using a hypothetical database function:
-  savePaymentToDatabase(data)
-    .then(() => {
-      console.log('Payment data saved to the database.');
-      // Send a response back to M-Pesa to acknowledge receipt
-      res.json({ result_code: 0, result_desc: 'Success' });
-    })
-    .catch((error) => {
-      console.error('Error saving payment data:', error);
-      // Send a response back to M-Pesa to indicate an error
-      res.status(500).json({ result_code: 1, result_desc: 'Error' });
-    });
-});
+  // Format the payment data using the FormatPaymentData helper method
+  const { status, resultCode, message, data: paymentdata } = FormatPaymentData(paymentData);
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  // Process the payment based on the status
+  if (status === 'success') {
+    // Save the payment data to the database
+    // Replace the code below with your actual database logic
+    // Example using MongoDB and Mongoose
+    const Payment = require('./models/payment'); // Import your Payment model
+    const newPayment = new Payment(paymentdata);
+    newPayment.save()
+      .then((savedPayment) => {
+        console.log('Payment data saved:', savedPayment);
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error('Error saving payment data:', error);
+        res.sendStatus(500);
+      });
+  } else if (status === 'canceled') {
+    console.log('Payment canceled:', message);
+    res.sendStatus(200);
+  } else if (status === 'failed') {
+    console.log('Payment failed:', message);
+    res.sendStatus(200);
+  } else {
+    console.log('Invalid payment status');
+    res.sendStatus(400);
+  }
 });
 ```
 
-In this example, we use the `express` library to create a simple server with an endpoint `/callback` that will receive the payment confirmation data. We use the `body-parser` middleware to parse the incoming JSON data in the request body.
+In this code snippet, we define an endpoint `/callback` that handles the incoming payment confirmation POST request. The payment data is extracted from the request body.
 
-When M-Pesa sends the payment confirmation to your `callbackUrl`, your server receives it as a POST request with the payment details in the `req.body`. The server then processes the data, saves it to the database using the `savePaymentToDatabase` function (you would need to implement this function or use a database library), and responds with a JSON object indicating the status of the processing.
+#### FormatPaymentData Helper Method
 
-Please note that this is a simplified example, and in a real-world scenario, you would need to add error handling, data validation, and proper database integration. Additionally, you may want to secure your server's endpoint using authentication and validation mechanisms to ensure that only legitimate payment confirmations are processed.
+Before processing the payment based on its status, we use the `FormatPaymentData` helper method to format the payment details. This method ensures that the data received from M-Pesa is properly structured and provides easy access to relevant information.
 
-By handling the payment confirmation on your server and saving it to a database, you can keep track of the payment status, reconcile transactions, and perform any necessary post-payment processing as required by your application's business logic.
+Here's an example of how to use the `FormatPaymentData` helper method:
+
+```javascript
+import { FormatPaymentData } from 'mpesapay';
+
+// ...
+
+app.post('/callback', (req, res) => {
+  const paymentData = req.body;
+
+  // Format the payment data using the FormatPaymentData helper method
+  const { status, resultCode, message, data: paymentdata } = FormatPaymentData(paymentData);
+
+  // ...
+});
+```
+
+The `FormatPaymentData` helper method takes the `paymentData` object received from M-Pesa and returns an object with the following properties:
+
+- `status`: The status of the payment (`'success'`, `'canceled'`, or `'failed'`).
+- `resultCode`: The result code provided by M-Pesa.
+- `message`: A descriptive message associated with the payment status.
+- `data`: The formatted payment data with relevant information.
+
+Using the destructuring assignment syntax, we extract these properties from the result of the `FormatPaymentData` method and assign them to variables for further processing.
+
+### Start the Server
+
+Finally, start the server by adding the following code at the end of the `server.js` file:
+
+```javascript
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
+### Conclusion
+
+Congratulations! You have successfully created a Node.js backend to handle the Mpesa payment confirmation on your server. The payment confirmation data is received via the `/callback` endpoint, formatted using the `FormatPaymentData` helper method, and can be further processed or saved to a database based on your application's requirements.
+
+Please note that this is a simplified example, and you may need to customize it based on your specific database setup and error handling. Ensure that you implement appropriate security measures and validate the incoming data to ensure the integrity and authenticity of the payment confirmation.
+
+Feel free to modify the code to fit your application's needs and explore further integration possibilities with the `mpesapay` module.

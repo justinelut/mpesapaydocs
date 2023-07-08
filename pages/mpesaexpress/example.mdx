@@ -12,7 +12,7 @@ const passkey = 'YOUR_PASS_KEY';
 const accountReference = 'YOUR_ACCOUNT_REFERENCE';
 const transactionDesc = 'YOUR_TRANSACTION_DESCRIPTION';
 
-const mpesaPay = new MpesaPay(
+const mpesapay = new MpesaPay(
   consumerKey,
   consumerSecret,
   businessShortCode,
@@ -23,7 +23,7 @@ const mpesaPay = new MpesaPay(
 
 async function initiatePayment(amount, phoneNumber, callbackUrl) {
   try {
-    const response = await mpesaPay.stkPush(amount, phoneNumber, callbackUrl);
+    const response = await mpesapay.stkPush(amount, phoneNumber, callbackUrl);
     console.log(response);
     // Handle the response data
   } catch (error) {
@@ -49,7 +49,7 @@ The Mpesa Pay module includes TypeScript type definitions, providing enhanced de
 
 That's it! You can now integrate Mpesa payments into your Node.js application using the Mpesa Pay library.
 
-Please note that Mpesa Pay only initiates payments, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the payment confirmation notifications and update your application accordingly.
+> Please note that ```stkPush``` only initiates payments, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the payment confirmation notifications and update your database accordingly.
 
 *Note* The mpesapay module does not currently support commonjs implementation such as
 require in nodejs. We are currently working on the feature. You can request a pull request

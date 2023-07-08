@@ -1,0 +1,67 @@
+## Example
+
+Here is a complete example implementation:
+
+```javascript
+const Consumer_Key = 'YOUR_CONSUMER_KEY';
+const Consumer_Secret = 'YOUR_CONSUMER_SECRET';
+const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
+const Passkey = 'YOUR_PASS_KEY';
+const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
+const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
+const PartyA = 'YOUR_MPESA_PARTYA';
+const B2C_Security_Credential = 'YOUR_MPESA_B2C_SECURITY_CREDENTIAL';
+const Initiator_Name = 'YOUR_MPESA_INITIATORS_NAME';
+const Environment = 'sandbox | live';
+
+const mpesapay = new MpesaPay(
+  Consumer_Key,
+  Consumer_Secret,
+  Business_Short_Code,
+  Passkey,
+  Account_Reference,
+  Transaction_Description,
+  PartyA,
+  B2C_Security_Credential,
+  Initiator_Name,
+  Environment
+);
+```
+
+Replace the placeholders with your actual M-Pesa API credentials.
+
+3. Call the `transactionStatus` method to check the transaction status:
+
+```javascript
+async function checkTransactionStatus(transactionId, callbackUrl) {
+  try {
+    const response = await mpesapay.transactionStatus(transactionId, callbackUrl);
+    console.log(response);
+    // Handle the response data
+  } catch (error) {
+    console.error(error);
+    // Handle errors
+  }
+}
+
+// Call the function to check the transaction status
+const transactionId = 'YOUR_TRANSACTION_ID';
+const callbackUrl = 'https://example.com/callback';
+checkTransactionStatus(transactionId, callbackUrl);
+```
+
+Replace the placeholders with your actual Mpesa credentials and customize the handling of the response data and errors according to your application's requirements.
+
+
+## TypeScript Support
+
+The Mpesa Pay module includes TypeScript type definitions, providing enhanced development experience and type checking capabilities when using the library in a TypeScript project.
+
+
+That's it! You can now integrate Mpesa payments into your Node.js application using the Mpesa Pay library.
+
+> Please note that Mpesa Pay only initiates transaction status, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the transaction status confirmation notifications and update your database accordingly.
+
+*Note* The mpesapay module does not currently support commonjs implementation such as
+require in nodejs. We are currently working on the feature. You can request a pull request
+from github to work on the feature.

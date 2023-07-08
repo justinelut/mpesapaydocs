@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link';
+import { useRouter } from 'next/router'
+import { useConfig } from 'nextra-theme-docs'
+ 
 
 export default {
   logo: (
     <>
-      <span style={{marginRight: '4px'}}>
+      <span style={{ marginRight: '4px' }}>
         <Image
           src='/mpesalogo.png'
           width={32}
@@ -36,13 +39,60 @@ export default {
   editLink: {
     text: 'Edit this page',
     component: () => {
-        return(
-            <Link href="https://github.com/justinelut/mpesapay/blob/master/README.md">Edit this page</Link>
-        )
-    }
+      return (
+        <Link href='https://github.com/justinelut/mpesapaydocs/blob/master/README.md'>
+          Edit this page
+        </Link>
+      );
+    },
   },
   feedback: {
     content: 'Feedback',
     useLink: () => 'https://github.com/justinelut/mpesapay/issues',
+  },
+
+  head: () => {
+    const { asPath, defaultLocale, locale } = useRouter();
+    const { frontMatter } = useConfig();
+    const url =
+      'https://justinedev.verixr.com/' +
+      (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+
+    return (
+      <>
+        <link
+          rel='icon'
+          href='/mpesalogo.png'
+          type='image/x-icon'></link>
+        <meta
+          property='og:url'
+          content={url}
+        />
+        <meta
+          property='og:title'
+          content={frontMatter.title || 'Mpesa Pay'}
+        />
+
+        <meta
+          name='keywords'
+          content='MpesaPay, M-Pesa, payment integration, Nextjs, Node.js, Nuxtjs, Sveltkit, payments, transaction status, account balance'
+        />
+
+        <meta
+          property='og:description'
+          content={
+            frontMatter.description ||
+            'The mpesapay module is a Javascript library for integrating M-Pesa payments into Node.js applications. It simplifies payment initiation, transaction status retrieval, and account balance checking.'
+          }
+        />
+        <meta
+          property='description'
+          content={
+            frontMatter.description ||
+            'The mpesapay module is a Javascript library for integrating M-Pesa payments into Node.js applications. It simplifies payment initiation, transaction status retrieval, and account balance checking.'
+          }
+        />
+      </>
+    );
   },
 };

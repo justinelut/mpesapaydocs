@@ -1,0 +1,111 @@
+## Receiving Business-to-Customer Payment Confirmation on Server
+
+"After initiating a business-to-customer payment transaction using the mpesapay.business2Customer(Amount, "ReceiversPhoneNumber", 'Payment Done', callbackUrl) method, M-Pesa will send the payment confirmation to the callbackUrl you have specified. 
+After which you can handle the Business to Customer Confirmation on the server as below example
+### Backend Setup
+
+To create the Node.js backend and handle the business-to-customer payment confirmation, follow these steps:
+
+1. Install the required dependencies by running the following command:
+
+```bash
+npm install express mpesapay
+```
+
+2. Create a new JavaScript file, such as `server.js`, as the entry point for your backend code.
+
+3. Import the necessary dependencies and initialize the Express app:
+
+```javascript
+import express from 'express';
+import bodyParser from 'body-parser';
+import { FormatBusinessToCustomer } from 'mpesapay';
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+```
+
+### Handle Business-to-Customer Payment Confirmation Endpoint
+
+To handle the business-to-customer payment confirmation endpoint, add the following code:
+
+```javascript
+app.post('/callback', (req, res) => {
+  const paymentData = req.body;
+
+  // Format the payment data using the FormatBusinessToCustomer helper method
+  const { resultCode, status, data: businessdata } = FormatBusinessToCustomer(paymentData);
+
+  // Process the payment based on the status
+  if (status === 'success') {
+    // Save the business-to-customer payment data to the database
+    // Replace the code below with your actual database logic
+    // Example using MongoDB and Mongoose
+    const Payment = require('./models/payment'); // Import your Payment model
+    const newPayment = new Payment(businessdata);
+    newPayment.save()
+      .then((savedPayment) => {
+        console.log('Business-to-customer payment data saved:', savedPayment);
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error('Error saving business-to-customer payment data:', error);
+        res.sendStatus(500);
+      });
+  } else {
+    console.log('Business-to-customer payment failed:', resultCode);
+    res.sendStatus(200);
+  }
+});
+```
+
+In this code snippet, we define an endpoint `/callback` that handles the incoming business-to-customer payment confirmation POST request. The payment data is extracted from the request body.
+
+#### FormatBusinessToCustomer Helper Method
+
+Before processing the payment based on its status, we use the `FormatBusinessToCustomer` helper method to format the business-to-customer payment details. This method ensures that the data received from M-Pesa is properly structured and provides easy access to relevant information.
+
+Here's an example of how to use the `FormatBusinessToCustomer` helper method:
+
+```javascript
+import { FormatBusinessToCustomer } from 'mpesapay';
+
+// ...
+
+app.post('/callback', (req, res) => {
+  const paymentData = req.body;
+
+  // Format the payment data using the FormatBusinessToCustomer helper method
+  const { resultCode, status, data: businessdata } = FormatBusinessToCustomer(paymentData);
+
+  // ...
+});
+```
+
+The `FormatBusinessToCustomer` helper method takes the `paymentData` object received from M-Pesa and returns an object with the following properties:
+
+- `resultCode`: The result code provided by M-Pesa.
+- `status`: The status of the business-to-customer payment.
+- `data`: The formatted payment data with relevant information.
+
+Using the destructuring assignment syntax, we extract these properties from the result of the `FormatBusinessToCustomer` method and assign them to variables for further processing.
+
+### Start the Server
+
+Finally, start the server by adding the following code at the end of the `server.js` file:
+
+```javascript
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
+### Conclusion
+
+Congratulations! You have successfully created a Node.js backend to handle the business-to-customer payment confirmation on your server. The payment confirmation data is received via the `/callback` endpoint, formatted using the `FormatBusinessToCustomer` helper method, and can be further processed or saved to a database based on your application's requirements.
+
+Please note that this is a simplified example, and you may need to customize it based on your specific database setup and error handling. Ensure that you implement appropriate security measures and validate the incoming data to ensure the integrity and authenticity of the payment confirmation.
+
+Feel free to modify the code to fit your application's needs and explore further integration possibilities with the `mpesapay` module.

@@ -1,0 +1,134 @@
+Certainly! Here's the documentation for handling the account balance confirmation:
+
+
+## Receiving Account Balance Confirmation on Server
+
+After calling the `mpesapay.accountBalance(callbackUrl)` method to retrieve the account balance data, you can format and process the data using the `FormatAccountBalance` helper method. This method is provided by the `mpesapay` module and allows you to extract relevant information from the account balance response.
+
+### Backend Setup
+
+To create the Node.js backend and handle the account balance confirmation, follow these steps:
+
+1. Install the required dependencies by running the following command:
+
+```bash
+npm install express mpesapay
+```
+
+2. Create a new JavaScript file, such as `server.js`, as the entry point for your backend code.
+
+3. Import the necessary dependencies and initialize the Express app:
+
+```javascript
+import express from 'express';
+import bodyParser from 'body-parser';
+import { FormatAccountBalance } from 'mpesapay';
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+```
+
+### Handle Account Balance Confirmation Endpoint
+
+To handle the account balance confirmation endpoint, add the following code:
+
+```javascript
+import express from 'express';
+import bodyParser from 'body-parser';
+import { FormatAccountBalance } from 'mpesapay';
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+
+app.post('/callback', (req, res) => {
+  const balanceData = req.body;
+
+  // Format the account balance data using the FormatAccountBalance helper method
+  const { accountBalances, resultCode, status } = FormatAccountBalance(balanceData);
+
+  if (status === 'success') {
+    // Save the account balance data to the database
+    saveAccountBalanceToDatabase(accountBalances)
+      .then(() => {
+        console.log('Account balance data saved to the database.');
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error('Error saving account balance data:', error);
+        res.sendStatus(500);
+      });
+  } else {
+    console.log('Account balance retrieval failed:', resultCode);
+    res.sendStatus(200);
+  }
+});
+
+// Database function to save account balance data
+function saveAccountBalanceToDatabase(accountBalances) {
+  // Replace this code with your actual database logic
+  // Example using MongoDB and Mongoose
+  const AccountBalance = require('./models/accountBalance'); // Import your AccountBalance model
+  const newAccountBalance = new AccountBalance(accountBalances);
+  return newAccountBalance.save();
+}
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+```
+
+In this code snippet, we define an endpoint `/callback` that handles the incoming account balance confirmation POST request. The account balance data is extracted from the request body.
+
+#### FormatAccountBalance Helper Method
+
+Before processing the account balance confirmation, we use the `FormatAccountBalance` helper method to format the account balance details. This method ensures that the data received from M-Pesa is properly structured and provides easy access to relevant information.
+
+Here's an example of how to use the `FormatAccountBalance` helper method:
+
+```javascript
+import { FormatAccountBalance } from 'mpesapay';
+
+// ...
+
+app.post('/callback', (req, res) => {
+  const balanceData = req.body;
+
+  // Format the account balance data using the FormatAccountBalance helper method
+  const { accountBalances, resultCode, status } = FormatAccountBalance(balanceData);
+
+  // ...
+});
+```
+
+The `FormatAccountBalance` helper method takes the `balanceData` object received from M-Pesa and returns an object with the following properties:
+
+- `accountBalances`: An array of account balance objects containing relevant information.
+- `resultCode`: The result code provided by M-Pesa.
+- `status`: The status of the account balance confirmation.
+
+Using the destructuring assignment syntax, we extract these properties from the result of the `FormatAccountBalance` method and assign them to variables for further processing.
+
+### Start the Server
+
+Finally, start the server by adding the following code at the end of the `server.js` file:
+
+```javascript
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
+### Conclusion
+
+Congratulations! You have successfully created a Node.js backend to handle the account balance confirmation on your server. The account balance data is received via the `/callback` endpoint, formatted using the `FormatAccountBalance` helper method, and can be further processed based on your application's requirements.
+
+> Please note that ```accountBalance``` only initiates payments, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the account balance confirmation notifications and update your database accordingly.
+
+Please note that this is a simplified example, and you may need to customize it based on your specific database setup and error handling. Ensure that you implement appropriate security measures and validate the incoming data to ensure the integrity and authenticity of the account balance confirmation.
+
+Feel free to modify the code to fit your application's needs and explore further integration possibilities with the `mpesapay` module.

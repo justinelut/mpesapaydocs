@@ -10,22 +10,74 @@ import MpesaPay from 'mpesapay';
 Create an instance of the `MpesaPay` class with your Mpesa API credentials:
 
 ```javascript
-const consumerKey = 'YOUR_CONSUMER_KEY';
-const consumerSecret = 'YOUR_CONSUMER_SECRET';
-const businessShortCode = 'YOUR_BUSINESS_SHORT_CODE';
-const passkey = 'YOUR_PASS_KEY';
-const accountReference = 'YOUR_ACCOUNT_REFERENCE';
-const transactionDesc = 'YOUR_TRANSACTION_DESCRIPTION';
+const Consumer_Key = 'YOUR_CONSUMER_KEY';
+const Consumer_Secret = 'YOUR_CONSUMER_SECRET';
+const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
+const Passkey = 'YOUR_PASS_KEY';
+const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
+const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
+const PartyA = "YOUR_MPESA_PARTYA"
+const B2C_Security_Credential = "YOUR MPESA B2C SECURITY CREDENTIAL"
+const Initiator_Name = "YOUR MPESA INITIATORS NAME"
+const Environment = 'sandbox | live'
 
-const mpesaPay = new MpesaPay(
-  consumerKey,
-  consumerSecret,
-  businessShortCode,
-  passkey,
-  accountReference,
-  transactionDesc
+
+
+const mpesapay = new MpesaPay(
+  Consumer_Key,
+  Consumer_Secret,
+  Business_Short_Code,
+  Passkey,
+  Account_Reference,
+  Transaction_Description,
+  PartyA,
+  B2C_Security_Credential,
+  Initiator Name,
+  Environment
 );
 ```
 
 Replace the placeholders with your actual Mpesa credentials.
 
+> Follow the getting Mpesa Credentials process  [Getting Mpesa Credentials](https://justinedev.verixr.com/getting-started/gettingcredentials)
+
+## Definition of terms
+
+### Consumer Key
+The Consumer Key is a unique identifier assigned to your M-Pesa API integration. It is obtained from the Safaricom Developer Portal when you create an API application.
+
+### Consumer Secret
+The Consumer Secret is a secret key associated with your M-Pesa API integration. It is obtained from the Safaricom Developer Portal when you create an API application.
+
+### Business Short Code
+The Business Short Code is a unique identifier assigned to your M-Pesa business account. It is provided by Safaricom when you register for an M-Pesa business account.
+
+### Passkey
+The Passkey is a security key used for generating STK Push passwords. It is provided by Safaricom when you register for an M-Pesa business account.
+
+### Account Reference
+The Account Reference is a unique identifier or description associated with a payment transaction. It can be used to identify the purpose of the payment or link it to a specific order or invoice in your system.
+
+### Transaction Description
+The Transaction Description is a brief description or message that provides more details about the payment transaction. It can be displayed to the user during the payment process for better clarity.
+
+### Party A
+Party A refers to the organization or business initiating the M-Pesa transaction. It could be the business's shortcode or phone number associated with the M-Pesa account.
+
+### B2C Security Credential
+The B2C Security Credential is a security credential used for processing Business to Customer (B2C) payments. It is provided by Safaricom when you register for an M-Pesa business account.
+
+### Initiator Name
+The Initiator Name is the name or identifier associated with the initiator of a transaction. It helps in identifying who initiated the transaction for auditing purposes.
+
+### Environment
+The environment indicates the target environment for the M-Pesa API requests. It can be either 'sandbox' or 'live'. In the 'sandbox' environment, you can test your integration with simulated transactions, while in the 'live' environment, the transactions will be processed with actual money.
+
+Please make sure to replace the placeholders with the actual values provided by Safaricom and appropriate values specific to your M-Pesa integration.
+ By default the environment is in sandbox mode
+
+ ```bash 
+ "sandbox" | "live"
+ ```
+
+You can specify the environment to any of the above modes depending on if you are in development or production mode

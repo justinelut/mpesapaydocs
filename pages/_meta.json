@@ -4,6 +4,5 @@
   "mpesaexpress": "Mpesa Express",
   "transactionstatus": "Transaction Status",
   "accountbalance": "Account Balance",
-  "dynamicqrcode": "Dynamic Qr Code",
-  "reversal": "Transaction Reversal"
+  "businesstocustomer": "Business to Customer"
 }

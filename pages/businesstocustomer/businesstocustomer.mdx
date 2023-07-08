@@ -1,0 +1,80 @@
+## Business to Customer Payment Documentation
+
+The `business2Customer` method in the `MpesaPay` class allows businesses to initiate payments from their M-Pesa business accounts to individual customers' M-Pesa accounts. This functionality is commonly used for services such as salary disbursements, refunds, or any other business-to-customer payment scenarios.
+
+### Initiating a Business to Customer Payment
+
+To initiate a business to customer payment, follow these steps:
+
+1. Import the `MpesaPay` class from the `mpesapay` module:
+
+```javascript
+import MpesaPay from 'mpesapay';
+```
+
+2. Create an instance of the `MpesaPay` class with your M-Pesa API credentials:
+
+```javascript
+const Consumer_Key = 'YOUR_CONSUMER_KEY';
+const Consumer_Secret = 'YOUR_CONSUMER_SECRET';
+const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
+const Passkey = 'YOUR_PASS_KEY';
+const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
+const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
+const PartyA = 'YOUR_MPESA_PARTYA';
+const B2C_Security_Credential = 'YOUR_MPESA_B2C_SECURITY_CREDENTIAL';
+const Initiator_Name = 'YOUR_MPESA_INITIATORS_NAME';
+const Environment = 'sandbox | live';
+
+const mpesapay = new MpesaPay(
+  Consumer_Key,
+  Consumer_Secret,
+  Business_Short_Code,
+  Passkey,
+  Account_Reference,
+  Transaction_Description,
+  PartyA,
+  B2C_Security_Credential,
+  Initiator_Name,
+  Environment
+);
+```
+
+Replace the placeholders with your actual M-Pesa API credentials.
+
+3. Call the `business2Customer` method to initiate the payment:
+
+```javascript
+async function initiateBusinessToCustomerPayment(amount, phoneNumber, transactionDescription, callbackUrl) {
+  try {
+    const results = await mpesapay.business2Customer(amount, phoneNumber, transactionDescription, callbackUrl);
+    console.log(results);
+    // Handle the response data
+  } catch (error) {
+    console.error(error);
+    // Handle errors
+  }
+}
+
+// Call the function to initiate the business to customer payment
+const amount = 10; // The payment amount in Kenyan shillings
+const phoneNumber = '254708374149'; // The customer's phone number
+const transactionDescription = 'Payment Done'; // A description of the payment
+const callbackUrl = 'https://example.com/callback'; // The URL to receive payment status updates
+initiateBusinessToCustomerPayment(amount, phoneNumber, transactionDescription, callbackUrl);
+```
+
+Here is an explanation of the parameters for the `business2Customer` method:
+
+- `amount`: The amount of money to be paid. This should be a numerical value representing the payment amount in Kenyan shillings.
+- `phoneNumber`: The phone number of the customer receiving the payment. This should be a string value starting with the country code (e.g., "254" for Kenya), followed by the phone number without any spaces or special characters.
+- `transactionDescription`: A description or reference for the payment transaction. This should be a string value.
+- `callbackUrl`: The URL that M-Pesa will use to send payment status updates to your server. This should be a string value containing a valid URL.
+
+The `business2Customer` method initiates the payment process and returns a Promise. The Promise resolves with the payment results if the payment was successfully initiated, or rejects with an error if the payment initiation fails.
+
+> Please note that ```business2Customer``` function only initiates the payments, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the business to customer payment confirmation notifications and update your database accordingly.
+
+Make sure to handle the response data and errors accordingly in your application.
+
+**Note:** Ensure that you have the correct phone number, transaction description, and callback URL to process the business to customer payment. The callback URL should be a valid and accessible endpoint on your server to receive payment status updates from M-Pesa.

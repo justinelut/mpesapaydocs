@@ -1,0 +1,73 @@
+## Account Balance Documentation
+
+The `accountBalance` method in the `MpesaPay` class allows you to retrieve the account balance of your M-Pesa business account. This functionality enables you to check the available balance in your account for financial management and reconciliation purposes.
+
+### Retrieving Account Balance
+
+To retrieve the account balance of your M-Pesa business account, follow these steps:
+
+1. Import the `MpesaPay` class from the `mpesapay` module:
+
+```javascript
+import MpesaPay from 'mpesapay';
+```
+
+2. Create an instance of the `MpesaPay` class with your M-Pesa API credentials:
+
+```javascript
+const Consumer_Key = 'YOUR_CONSUMER_KEY';
+const Consumer_Secret = 'YOUR_CONSUMER_SECRET';
+const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
+const Passkey = 'YOUR_PASS_KEY';
+const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
+const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
+const PartyA = 'YOUR_MPESA_PARTYA';
+const B2C_Security_Credential = 'YOUR_MPESA_B2C_SECURITY_CREDENTIAL';
+const Initiator_Name = 'YOUR_MPESA_INITIATORS_NAME';
+const Environment = 'sandbox | live';
+
+const mpesapay = new MpesaPay(
+  Consumer_Key,
+  Consumer_Secret,
+  Business_Short_Code,
+  Passkey,
+  Account_Reference,
+  Transaction_Description,
+  PartyA,
+  B2C_Security_Credential,
+  Initiator_Name,
+  Environment
+);
+```
+
+Replace the placeholders with your actual M-Pesa API credentials.
+
+3. Call the `accountBalance` method to retrieve the account balance:
+
+```javascript
+async function getAccountBalance(callbackUrl) {
+  try {
+    const response = await mpesapay.accountBalance(callbackUrl);
+    console.log(response);
+    // Handle the response data
+  } catch (error) {
+    console.error(error);
+    // Handle errors
+  }
+}
+
+// Call the function to retrieve the account balance
+const callbackUrl = 'https://example.com/callback'; // The URL to receive the account balance information
+getAccountBalance(callbackUrl);
+```
+
+Here is an explanation of the parameters for the `accountBalance` method:
+
+- `callbackUrl`: The URL that M-Pesa will use to send the account balance information to your server. This should be a string value containing a valid URL.
+
+The `accountBalance` method initiates a request to retrieve the account balance and returns a Promise. The Promise resolves with the account balance information if the retrieval was successful, or rejects with an error if the retrieval fails.
+
+Make sure to handle the response data and errors accordingly in your application.
+
+**Note:** Ensure that you have the correct callback URL to receive the account balance information from M-Pesa. The callback URL should be a valid and accessible endpoint on your server.
+
