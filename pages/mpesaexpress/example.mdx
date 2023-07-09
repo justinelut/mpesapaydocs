@@ -4,39 +4,36 @@ Here is a complete example implementation:
 
 ```javascript
 import MpesaPay from 'mpesapay';
+```
 
-const consumerKey = 'YOUR_CONSUMER_KEY';
-const consumerSecret = 'YOUR_CONSUMER_SECRET';
-const businessShortCode = 'YOUR_BUSINESS_SHORT_CODE';
-const passkey = 'YOUR_PASS_KEY';
-const accountReference = 'YOUR_ACCOUNT_REFERENCE';
-const transactionDesc = 'YOUR_TRANSACTION_DESCRIPTION';
+Create an instance of the `MpesaPay` class with your Mpesa API credentials:
+
+```javascript
+const Consumer_Key = 'YOUR_CONSUMER_KEY';
+const Consumer_Secret = 'YOUR_CONSUMER_SECRET';
+const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
+const Passkey = 'YOUR_PASS_KEY';
+const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
+const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
+const PartyA = "YOUR_MPESA_PARTYA"
+const B2C_Security_Credential = "YOUR MPESA B2C SECURITY CREDENTIAL"
+const Initiator_Name = "YOUR MPESA INITIATORS NAME"
+const Environment = 'sandbox | live'
+
+
 
 const mpesapay = new MpesaPay(
-  consumerKey,
-  consumerSecret,
-  businessShortCode,
-  passkey,
-  accountReference,
-  transactionDesc
+  Consumer_Key,
+  Consumer_Secret,
+  Business_Short_Code,
+  Passkey,
+  Account_Reference,
+  Transaction_Description,
+  PartyA,
+  B2C_Security_Credential,
+  Initiator_Name,
+  Environment
 );
-
-async function initiatePayment(amount, phoneNumber, callbackUrl) {
-  try {
-    const response = await mpesapay.stkPush(amount, phoneNumber, callbackUrl);
-    console.log(response);
-    // Handle the response data
-  } catch (error) {
-    console.error(error);
-    // Handle errors
-  }
-}
-
-const amount = '100';
-const phoneNumber = '254712345678';
-const callbackUrl = 'https://example.com/callback';
-
-initiatePayment(amount, phoneNumber, callbackUrl);
 ```
 
 Replace the placeholders with your actual Mpesa credentials and customize the handling of the response data and errors according to your application's requirements.

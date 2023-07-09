@@ -1,0 +1,127 @@
+## Contributing to MpesaPay Module
+
+Thank you for your interest in contributing to the MpesaPay module! We appreciate your help in improving the functionality and documentation of this TypeScript module for integrating M-Pesa payment services. To contribute, please follow these steps:
+
+1. Fork the MpesaPay repository: Visit the MpesaPay repository on GitHub (https://github.com/justinelut/mpesapay) and click on the "Fork" button at the top-right corner of the page. This will create a copy of the MpesaPay module under your GitHub account.
+
+2. Clone the repository: Clone your forked repository to your local machine using Git. Open a terminal or command prompt, navigate to the directory where you want to clone the project, and run the following command:
+
+   ```bash
+   git clone https://github.com/justinelut/mpesapay.git
+   ```
+
+3. Install dependencies: Change to the project's directory and install the required dependencies by running:
+
+   ```bash
+   cd mpesapay
+   npm install
+   ```
+
+4. File Structure:
+
+   The MpesaPay module follows the following file structure:
+
+   ```
+   mpesapay/
+   ├── src/
+   │   ├── helpers/
+   │   │   ├── FormatAccountBalance.ts
+   │   │   ├── FormatBusinessToCustomer.ts
+   │   │   ├── FormatPaymentData.ts
+   │   │   └── UniqueReferenceNumber.ts
+   │   ├── transactions/
+   │   │   ├── Accountbalance/
+   │   │   │   └── balanceRequestBody.ts
+   │   │   │   └── index.ts
+   │   │   ├── businesstocustomer/
+   │   │   │   ├── B2cRequestBody.ts
+   │   │   │   └── index.ts
+   │   │   ├── mpesaexpress/
+   │   │   │   ├── ExpressRequestBody.ts
+   │   │   │   └── index.ts
+   │   │   └── transactionstatus/
+   │   │       ├── transactionRequestBody.ts
+   │   │       └── index.ts
+   │   ├── utils/
+   │   │   ├── accessToken.ts
+   │   │   ├── Config.ts
+   │   │   ├── Password.ts
+   │   │   └── timestamp.ts
+   │   ├── helpers.ts
+   │   └── index.ts
+   ├── .gitignore
+   ├── package.json
+   ├── tsconfig.json
+   └── README.md
+   ```
+
+   The file structure consists of the following main directories and files:
+
+   - `src/`: Contains the source code of the MpesaPay module.
+     - `helpers/`: Contains helper files for formatting and generating values used in M-Pesa transactions.
+       - `FormatAccountBalance.ts`: Helper method for formatting account balance data.
+       - `FormatBusinessToCustomer.ts`: Helper method for formatting Business-to-Customer (B2C) payment data.
+       - `FormatPaymentData.ts`: Helper method for formatting general payment data.
+       - `UniqueReferenceNumber.ts`: Helper method for generating a unique reference number.
+     - `transactions/`: Contains files related to different M-Pesa transactions.
+       - `Accountbalance/`: Contains files related to retrieving the account balance.
+         - `balanceRequestBody.ts`: Defines the request body interface and related types for the account balance transaction.
+         - `index.ts`: Acts as the entry point for the account balance transaction.
+       - `businesstocustomer/`: Contains files related to Business-to-Customer (B2C) transactions.
+         - `B2cRequestBody.ts`: Defines the request body interface and related types for B2C transactions.
+         - `index.ts`: Acts as the entry point for B2C transactions.
+       - `mpesaexpress/`: Contains files related to Mpesa Express (STK Push) transactions.
+         - `ExpressRequestBody.ts`: Defines the request body interface and related types for Mpesa Express transactions.
+         - `index.ts`: Acts as the entry point for Mpesa Express transactions.
+       - `transactionstatus/`: Contains files related to transaction status inquiries.
+         - `transactionRequestBody.ts`: Defines the request body interface and related types for transaction status inquiries.
+         - `index.ts`: Acts as the entry point for transaction status inquiries.
+     - `utils/`: Contains utility files used within the module.
+       - `accessToken.ts`: Utility file for accessing and managing Mpesa Api accesstokens.
+       - `Config.ts`: Configuration file for the MpesaPay module axios request header.
+       - `Password.ts`: Utility file for Mpesa Api password.
+       - `timestamp.ts`: Utility file for generating timestamps.
+     - `helpers.ts`: Main file that exports all the helper methods.
+     - `index.ts`: Main entry Class file for the MpesaPay module.
+
+   - `.gitignore`: Specifies which files and directories should be ignored by Git.
+   - `package.json`: Contains information about the project and its dependencies.
+   - `tsconfig.json`: TypeScript configuration file.
+   - `README.md`: Project documentation and instructions.
+
+5. Make changes: Open the project in a text editor or IDE and make the necessary changes. You can add new features, fix bugs, improve existing code, or update the documentation. Consider the existing file structure and modify or create files accordingly.
+
+6. Test your changes: Ensure that the module works as expected by running the provided tests. You can run the tests using the following command:
+
+   ```bash
+   npm test
+   ```
+
+   Make sure that all tests pass successfully.
+
+7. Commit and push changes: Once you have made the desired changes, commit them to your local branch using the following commands:
+
+   ```bash
+   git add .
+   git commit -m "Add my contribution to the MpesaPay module"
+   ```
+
+   Then, push the changes to your forked repository on GitHub:
+
+   ```bash
+   git push origin my-contribution
+   ```
+
+8. Submit a pull request: Go to your forked repository on GitHub and switch to the branch containing your changes. Click on the "New pull request" button to start the process of submitting a pull request to the original MpesaPay repository.
+
+9. Describe your changes: Provide a clear and concise description of the changes you have made in the pull request. Explain the purpose and impact of your contribution to help the project maintainers understand and review your changes effectively.
+
+10. Review and address feedback: The project maintainers will review your pull request and provide feedback. They may ask for modifications, request clarifications, or suggest improvements. Engage in the discussion and make the necessary adjustments to address the feedback.
+
+11. Merge your changes: Once your pull request has been reviewed and approved by the project maintainers, they will merge your changes into the main branch of the MpesaPay repository. Congratulations! Your contribution is now part of the official module.
+
+Please ensure that your contributions adhere to the project's coding conventions and standards. Maintain proper code formatting, write meaningful commit messages, and update the documentation accordingly.
+
+Thank you again for your valuable contribution to the MpesaPayDocs project. We look forward to your improvements to the M-Pesa payment integration documentation.
+
+Feel free to modify or add new sections as needed to enhance the documentation.
