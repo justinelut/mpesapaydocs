@@ -51,10 +51,6 @@ The documentation follows a structured format for easy navigation and readabilit
 
 Feel free to modify or add new sections as needed to enhance the documentation.
 
-## Deployment
-
-The documentation website is automatically deployed when changes are pushed to the `main` branch. The deployment process is handled by a CI/CD pipeline, ensuring that the latest version of the documentation is always available at [https://mpesapay.verixr.com](https://mpesapay.verixr.com).
-
 ## Contributing
 
 Contributions to the Mpesa Pay JavaScript SDK documentation are welcome! If you find any errors, have suggestions for improvements, or want to contribute new sections, please follow the [Contributing Guidelines](https://mpesapay.verixr.com/conributing).
