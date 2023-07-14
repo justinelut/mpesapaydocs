@@ -14,8 +14,21 @@ Thank you for your interest in contributing to the MpesaPay module! We appreciat
 
    ```bash
    cd mpesapay
-   npm install
+   yarn 
    ```
+
+   > Then you can build the module and test it locally
+   ```bash
+   yarn build
+   ```
+
+   > Then before commiting for review you have to run.
+   ```bash
+   yarn changeset
+   ```
+
+   & state whether its a minor update or a patch.
+
 
 4. File Structure:
 
@@ -40,8 +53,9 @@ Thank you for your interest in contributing to the MpesaPay module! We appreciat
    │   │   │   ├── ExpressRequestBody.ts
    │   │   │   └── index.ts
    │   │   └── transactionstatus/
-   │   │       ├── transactionRequestBody.ts
-   │   │       └── index.ts
+   │   │   │   ├── transactionRequestBody.ts
+   │   │   │   └── index.ts
+   |   |   └─ mpesapay.ts
    │   ├── utils/
    │   │   ├── accessToken.ts
    │   │   ├── Config.ts
@@ -76,13 +90,14 @@ Thank you for your interest in contributing to the MpesaPay module! We appreciat
        - `transactionstatus/`: Contains files related to transaction status inquiries.
          - `transactionRequestBody.ts`: Defines the request body interface and related types for transaction status inquiries.
          - `index.ts`: Acts as the entry point for transaction status inquiries.
+       - `mpesapay.ts`: The main entry class for the transactions functions.
      - `utils/`: Contains utility files used within the module.
        - `accessToken.ts`: Utility file for accessing and managing Mpesa Api accesstokens.
        - `Config.ts`: Configuration file for the MpesaPay module axios request header.
        - `Password.ts`: Utility file for Mpesa Api password.
        - `timestamp.ts`: Utility file for generating timestamps.
      - `helpers.ts`: Main file that exports all the helper methods.
-     - `index.ts`: Main entry Class file for the MpesaPay module.
+     - `index.ts`: Main entry file for the MpesaPay module.
 
    - `.gitignore`: Specifies which files and directories should be ignored by Git.
    - `package.json`: Contains information about the project and its dependencies.
