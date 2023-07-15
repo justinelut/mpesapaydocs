@@ -51,6 +51,12 @@ export default {
     useLink: () => 'https://github.com/justinelut/mpesapay/issues',
   },
 
+   useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Mpesapay'
+    }
+  },
+
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
@@ -68,11 +74,7 @@ export default {
           property='og:url'
           content={url}
         />
-        <meta
-          property='og:title'
-          content={frontMatter.title || 'Mpesa Pay'}
-        />
-
+  
         <meta
           name='keywords'
           content='MpesaPay, M-Pesa, payment integration, Nextjs, Node.js, Nuxtjs, Sveltkit, payments, transaction status, account balance'
