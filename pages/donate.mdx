@@ -3,3 +3,45 @@
 #### Any Amount will be supporting the maintenance of the mpesapay module
 
 [Support Via Paypal](https://www.paypal.com/donate/?hosted_button_id=DYVVE53QU35FS)
+
+import React, { useEffect } from 'react';
+
+export const DonateButton = () => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.paypalobjects.com/donate/sdk/donate-sdk.js';
+    script.charset = 'UTF-8';
+    script.addEventListener('load', () => {
+      PayPal.Donation.Button({
+        env: 'production',
+        hosted_button_id: 'CJSVBUN3NRRLU',
+        image: {
+          src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+          alt: 'Donate with PayPal button',
+          title: 'PayPal - The safer, easier way to pay online!',
+        },
+      }).render('#donate-button');
+    });
+
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return (
+     <div className="flex justify-center items-center h-screen">
+      <div id="donate-button-container">
+        <div id="donate-button"></div>
+      </div>
+        <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+    </div>
+  );
+};
+
+export default DonateButton;
+
+
+<DonateButton></DonateButton>
