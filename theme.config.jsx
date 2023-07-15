@@ -51,11 +51,16 @@ export default {
     useLink: () => 'https://github.com/justinelut/mpesapay/issues',
   },
 
-   useNextSeoProps() {
-    return {
-      titleTemplate: '%s – Mpesapay'
+
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
+      return {
+        titleTemplate: '%s – Mpesapay'
+      }
     }
-  },
+  }
+,
 
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
