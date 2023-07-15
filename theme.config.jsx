@@ -58,6 +58,10 @@ export default {
       return {
         titleTemplate: '%s – Mpesapay'
       }
+    }else{
+      return {
+        titleTemplate: 'Home – Mpesapay',
+      };
     }
   }
 ,
