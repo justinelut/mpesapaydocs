@@ -49,9 +49,9 @@ Replace the placeholders with your actual M-Pesa API credentials.
 3. Call the `stkPushQuery` method to check the transaction status:
 
 ```javascript
-async function checkTransactionStatus(checkoutRequestID) {
+async function checkTransactionStatus(CheckoutRequestID) {
   try {
-    const response = await mpesapay.stkPushQuery(checkoutRequestID);
+    const response = await mpesapay.stkPushQuery(CheckoutRequestID);
     console.log(response);
     // Handle the response data
   } catch (error) {
@@ -61,13 +61,13 @@ async function checkTransactionStatus(checkoutRequestID) {
 }
 
 // Call the function to check the transaction status
-const checkoutRequestID = 'YOUR_CHECKOUT_REQUEST_ID';
-checkTransactionStatus(checkoutRequestID);
+const CheckoutRequestID = 'YOUR_CHECKOUT_REQUEST_ID';
+checkTransactionStatus(CheckoutRequestID);
 ```
 
 Here is an explanation of the parameter for the `stkPushQuery` method:
 
-- `checkoutRequestID`: The unique identifier of the STK push transaction you want to check. This should be a string value representing the `CheckoutRequestID` returned when the payment was requested.
+- `CheckoutRequestID`: The unique identifier of the STK push transaction you want to check. This should be a string value representing the `CheckoutRequestID` returned when the payment was requested.
 
 > Please refer to [STK Push](/mpesaexpress/stkpush) for a complete example of how to initiate payment and how to obtain the `CheckoutRequestID`
 
