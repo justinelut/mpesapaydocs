@@ -60,7 +60,7 @@ export default {
       }
     }else{
       return {
-        titleTemplate: 'Home – Mpesapay',
+        titleTemplate: 'Mpesapay',
       };
     }
   }
