@@ -26,7 +26,8 @@ const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
 const PartyA = "YOUR_MPESA_PARTYA"
 const B2C_Security_Credential = "YOUR MPESA B2C SECURITY CREDENTIAL"
 const Initiator_Name = "YOUR MPESA INITIATORS NAME"
-const Environment = 'sandbox'
+const Environment = 'THE ENVIRONMENT i.e sandbox or live'
+const Transaction_Type = "YOUR SHORTCODE TYPE i.e paybill or till"
 
 
 
@@ -41,6 +42,7 @@ const mpesapay = new MpesaPay(
   B2C_Security_Credential,
   Initiator_Name,
   Environment
+  Transaction_Type
 );
 ```
 
@@ -68,6 +70,27 @@ const phoneNumber = '254712345678';
 const callbackUrl = 'https://example.com/callback';
 initiatePayment(amount, phoneNumber, callbackUrl);
 ```
+
+## Response Object
+
+If the stkpush method is successful, a response object with data as below is returned. This shows that a prompt for payment was
+requested to the customer's phone.
+
+
+```json
+    {
+        "MerchantRequestID": "71316-96354261-1",
+        "CheckoutRequestID": "ws_CO_17072023124623869740455200",
+        "ResponseCode": "0",
+        "ResponseDescription": "Success. Request accepted for processing",
+        "CustomerMessage": "Success. Request accepted for processing"
+    }
+```
+
+
+> The `CheckoutRequestID` obtained from a successful response is crucial for verifying the payment status. Therefore, it needs to be stored for future reference.
+
+
 
 Here is an explanation of the parameters:
 

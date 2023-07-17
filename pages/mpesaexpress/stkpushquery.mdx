@@ -1,0 +1,110 @@
+## Stkpush Transaction Status
+
+The `stkPushQuery` method in the `MpesaPay` class allows you to retrieve the status of a previously initiated [STK Push](/mpesaexpress/stkpush) transaction. You can use this method to check whether a payment transaction was successful or canceled by the user.
+
+### Checking Transaction Status of the stkpush method
+
+To check the status of a previously initiated STK push transaction, follow these steps:
+
+1. Import the `MpesaPay` class from the `mpesapay` module:
+
+```javascript
+import MpesaPay from 'mpesapay';
+```
+
+2. Create an instance of the `MpesaPay` class with your M-Pesa API credentials:
+
+```javascript
+const Consumer_Key = 'YOUR_CONSUMER_KEY';
+const Consumer_Secret = 'YOUR_CONSUMER_SECRET';
+const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
+const Passkey = 'YOUR_PASS_KEY';
+const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
+const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
+const PartyA = "YOUR_MPESA_PARTYA"
+const B2C_Security_Credential = "YOUR MPESA B2C SECURITY CREDENTIAL"
+const Initiator_Name = "YOUR MPESA INITIATORS NAME"
+const Environment = 'THE ENVIRONMENT i.e sandbox or live'
+const Transaction_Type = "YOUR SHORTCODE TYPE i.e paybill or till"
+
+
+
+const mpesapay = new MpesaPay(
+  Consumer_Key,
+  Consumer_Secret,
+  Business_Short_Code,
+  Passkey,
+  Account_Reference,
+  Transaction_Description,
+  PartyA,
+  B2C_Security_Credential,
+  Initiator_Name,
+  Environment
+  Transaction_Type
+);
+```
+
+Replace the placeholders with your actual M-Pesa API credentials.
+
+3. Call the `stkPushQuery` method to check the transaction status:
+
+```javascript
+async function checkTransactionStatus(checkoutRequestID) {
+  try {
+    const response = await mpesapay.stkPushQuery(checkoutRequestID);
+    console.log(response);
+    // Handle the response data
+  } catch (error) {
+    console.error(error);
+    // Handle errors
+  }
+}
+
+// Call the function to check the transaction status
+const checkoutRequestID = 'YOUR_CHECKOUT_REQUEST_ID';
+checkTransactionStatus(checkoutRequestID);
+```
+
+Here is an explanation of the parameter for the `stkPushQuery` method:
+
+- `checkoutRequestID`: The unique identifier of the STK push transaction you want to check. This should be a string value representing the `CheckoutRequestID` returned when the payment was requested.
+
+> Please refer to [STK Push](/mpesaexpress/stkpush) for a complete example of how to initiate payment and how to obtain the `CheckoutRequestID`
+
+The `stkPushQuery` method initiates a request to retrieve the status of the transaction associated with the provided `CheckoutRequestID`. It returns a Promise. The Promise resolves with the response data if the status retrieval was successful, or rejects with an error if the retrieval fails.
+
+Please handle the response data and errors appropriately in your application.
+
+The response returned after calling the `stkPushQuery` method with the `CheckoutRequestID` will either be:
+
+#### Successful transaction
+
+```json
+{
+  "ResponseCode": "0",
+  "ResponseDescription": "The service request has been accepted successfully",
+  "MerchantRequestID": "23308-183815995-1",
+  "CheckoutRequestID": "ws_CO_16072023200432073740455200",
+  "ResultCode": "0",
+  "ResultDesc": "The service request is processed successfully."
+}
+```
+
+or
+
+#### Canceled or Failed Transaction
+
+```json
+{
+  "ResponseCode": "0",
+  "ResponseDescription": "The service request has been accepted successfully",
+  "MerchantRequestID": "36055-24147609-1",
+  "CheckoutRequestID": "ws_CO_16072023200548820740455200",
+  "ResultCode": "1032",
+  "ResultDesc": "Request canceled by user"
+}
+```
+
+> From the returned information, you are therefore able to confirm the payment status and return a response to the user who initiated the payment,
+
+Ensure that you have the correct `CheckoutRequestID` to retrieve the transaction status, [stkPush ](/mpesaexpress/stkpush#response-object)

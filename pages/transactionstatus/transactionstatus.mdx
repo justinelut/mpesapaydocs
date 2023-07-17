@@ -1,6 +1,9 @@
-## Transaction Status
+## Paybill / Till Transaction Status
 
-The `transactionStatus` method in the `MpesaPay` class allows you to retrieve the status of a previously initiated payment transaction. You can use this method to check whether a payment transaction was successful, failed, or is still being processed.
+The `transactionStatus` method in the `MpesaPay` class allows you to retrieve the status of a previously made transaction via `Till` or
+`Paybill`.
+
+You can use this method to check whether a payment transaction was successful, failed, or is still being processed.
 
 ### Checking Transaction Status
 
@@ -21,10 +24,13 @@ const Business_Short_Code = 'YOUR_BUSINESS_SHORT_CODE';
 const Passkey = 'YOUR_PASS_KEY';
 const Transaction_Description = 'YOUR_TRANSACTION_DESCRIPTION';
 const Account_Reference = 'YOUR_ACCOUNT_REFERENCE';
-const PartyA = 'YOUR_MPESA_PARTYA';
-const B2C_Security_Credential = 'YOUR_MPESA_B2C_SECURITY_CREDENTIAL';
-const Initiator_Name = 'YOUR_MPESA_INITIATORS_NAME';
-const Environment = 'sandbox';
+const PartyA = "YOUR_MPESA_PARTYA"
+const B2C_Security_Credential = "YOUR MPESA B2C SECURITY CREDENTIAL"
+const Initiator_Name = "YOUR MPESA INITIATORS NAME"
+const Environment = 'THE ENVIRONMENT i.e sandbox or live'
+const Transaction_Type = "YOUR SHORTCODE TYPE i.e paybill or till"
+
+
 
 const mpesapay = new MpesaPay(
   Consumer_Key,
@@ -37,6 +43,7 @@ const mpesapay = new MpesaPay(
   B2C_Security_Credential,
   Initiator_Name,
   Environment
+  Transaction_Type
 );
 ```
 
@@ -64,12 +71,14 @@ checkTransactionStatus(transactionId, callbackUrl);
 
 Here is an explanation of the parameters for the `transactionStatus` method:
 
-- `transactionId`: The unique identifier of the transaction you want to check. This should be a string value representing the transaction ID returned when the payment was initiated.
+- `transactionId`: The unique identifier of the transaction you want to check. This should be a string value representing the transaction ID or Mpesa Confirmation code recieved by a customer after making payment to your `Till` or `Paybill directly`,
+without using the [stkPush method](/mpesaexpress/stkpush)
+
 - `callbackUrl`: The URL that M-Pesa will use to send the transaction status details to your server. This should be a string value containing a valid URL.
 
 The `transactionStatus` method initiates a request to retrieve the status of the transaction and returns a Promise. The Promise resolves with the response data if the status retrieval was successful, or rejects with an error if the retrieval fails.
 
-> Please note that Mpesa Pay only initiates transaction status, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the transaction status confirmation notifications and update your database accordingly.
+> Please note that the `transactionStatus` method only initiates transaction status check, and the results will be sent to the provided callback URL. Make sure to implement the necessary server-side logic to handle the transaction status confirmation notifications and update your database accordingly.
 
 Make sure to handle the response data and errors accordingly in your application.
 
