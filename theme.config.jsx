@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useConfig } from 'nextra-theme-docs';
+import { useEffect } from 'react';
 
 export default {
   logo: (
@@ -189,24 +190,36 @@ export default {
       'https://justinedev.verixr.com/' +
       (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
 
+        useEffect(() => {
+    // This will execute when the component mounts
+
+    // Create the script element
+    const script = document.createElement('script');
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-R7ERRQ7TXB';
+    script.async = true;
+
+    // Append the script to the document's head
+    document.head.appendChild(script);
+
+    // Define the gtag function
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    // Call gtag('js', new Date()) and gtag('config', 'G-R7ERRQ7TXB')
+    gtag('js', new Date());
+    gtag('config', 'G-R7ERRQ7TXB');
+
+    // Clean up the script when the component unmounts
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
     return (
       <>
-        <Script
-          strategy='lazyOnload'
-          src={`https://www.googletagmanager.com/gtag/js?id=G-R7ERRQ7TXB`}
-        />
-        <Script
-          strategy='lazyOnload'
-          id='gtm-inline'>
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-R7ERRQ7TXB', {
-            page_path: window.location.pathname,
-          });
-        `}
-        </Script>
+       
         <link
           rel='icon'
           href='/mpesalogo.png'
