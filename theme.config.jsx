@@ -1,8 +1,8 @@
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
-import { useConfig } from 'nextra-theme-docs'
- 
+import { useRouter } from 'next/router';
+import { useConfig } from 'nextra-theme-docs';
+import Script from 'next/script';
 
 export default {
   logo: (
@@ -51,21 +51,18 @@ export default {
     useLink: () => 'https://github.com/justinelut/mpesapay/issues',
   },
 
-
   useNextSeoProps() {
-    const { asPath } = useRouter()
+    const { asPath } = useRouter();
     if (asPath !== '/') {
       return {
-        titleTemplate: '%s – Mpesapay'
-      }
-    }else{
+        titleTemplate: '%s – Mpesapay',
+      };
+    } else {
       return {
         titleTemplate: 'Mpesapay',
       };
     }
-  }
-,
-
+  },
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter } = useConfig();
@@ -83,10 +80,15 @@ export default {
           property='og:url'
           content={url}
         />
-  
+
         <meta
           name='keywords'
           content='MpesaPay, M-Pesa, payment integration, Nextjs, Node.js, Nuxtjs, Sveltkit, payments, transaction status, account balance'
+        />
+
+        <meta
+          property='og:image'
+          content='/mpesaimage.jpg'
         />
 
         <meta
@@ -103,6 +105,15 @@ export default {
             'The mpesapay module is a Javascript library for integrating M-Pesa payments into Node.js applications. It simplifies payment initiation, transaction status retrieval, and account balance checking.'
           }
         />
+
+        <Script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=G-R7ERRQ7TXB'></Script>
+        <Script>
+          window.dataLayer = window.dataLayer || []; function gtag()
+          {dataLayer.push(arguments)}
+          gtag('js', new Date()); gtag('config', 'G-R7ERRQ7TXB');
+        </Script>
       </>
     );
   },
