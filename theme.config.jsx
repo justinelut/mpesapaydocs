@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useConfig } from 'nextra-theme-docs';
 import Script from 'next/script';
+import { useConfig } from 'nextra-theme-docs';
 
 export default {
   logo: (
@@ -72,6 +72,22 @@ export default {
 
     return (
       <>
+        <Script
+          strategy='lazyOnload'
+          src={`https://www.googletagmanager.com/gtag/js?id=G-R7ERRQ7TXB`}
+        />
+        <Script
+          strategy='lazyOnload'
+          id='gtm-inline'>
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R7ERRQ7TXB', {
+            page_path: window.location.pathname,
+          });
+        `}
+        </Script>
         <link
           rel='icon'
           href='/mpesalogo.png'
@@ -105,15 +121,6 @@ export default {
             'The mpesapay module is a Javascript library for integrating M-Pesa payments into Node.js applications. It simplifies payment initiation, transaction status retrieval, and account balance checking.'
           }
         />
-
-        <Script
-          async
-          src='https://www.googletagmanager.com/gtag/js?id=G-R7ERRQ7TXB'></Script>
-        <Script>
-          window.dataLayer = window.dataLayer || []; function gtag()
-          {dataLayer.push(arguments)}
-          gtag('js', new Date()); gtag('config', 'G-R7ERRQ7TXB');
-        </Script>
       </>
     );
   },
